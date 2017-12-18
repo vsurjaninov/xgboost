@@ -73,9 +73,9 @@ build_script:
     # Python package
     - if /i "%DO_PYTHON%" == "on" (
         cd %APPVEYOR_BUILD_FOLDER%\python-package &&
-        python setup.py install &&
         mkdir wheel &&
-        python setup.py bdist_wheel --universal --plat-name win-amd64 -d wheel
+        python setup.py bdist_wheel --universal --plat-name win-amd64 -d wheel &&
+        pip install --use-wheel --no-index --find-links=%APPVEYOR_BUILD_FOLDER%\python-package\wheel xgboost
       )
     # R package: make + mingw standard CRAN packaging (only x64 for now)
     - if /i "%target%" == "rmingw" (
